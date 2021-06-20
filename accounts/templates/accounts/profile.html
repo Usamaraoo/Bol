@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} {{request.user}} {% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
+{% endblock stylesheets %}
+{% block content %}
+<div class="cover" style="background: url({{user.prof_cover.url}}); ">
+</div>
+<div class="profile_main">
+    <div class="profile_row">
+
+        <div class="">
+            <div class="profile_pic  ">
+                <img src="{{user.prof_pic.url}}" alt="profile">
+            </div>
+            <div class=" edit_button ">
+                <button class="btn btn-primary bg-transparent "><a href="#"> Edit profile</a></button>
+            </div>
+        </div>
+    </div>
+    <h3>{{user.first_name}} <span>{{user.last_name}}</span> </h3>
+    <h5>@{{user.username}}</h5>
+    <h5> <img src="{% static 'resource/site_icons/calendar.png' %}" alt=" calendar" width="4%" height="4%"> joined on
+        {{user.date_joined.date}}
+    </h5>
+    <h5>23 following 0 follower</h5>
+    <hr>
+</div>
+{% for twt in tweets %}
+<div class="card text-white bg-dark mb-1 " style="max-width: 80rem;">
+    <div class="card-body">
+        <a href="{% url 'profile' twt.user.username %}">
+            <div class="row">
+                <div class="col-1">
+                    <img src="{{twt.user.prof_pic.url}}" alt="profile picture" class="profile">
+                </div>
+                <strong class="card-text col-3">{{twt.user.username}}</strong>
+            </div>
+        </a>
+
+        <h4 class="card-title">{{twt.tweet}}</h4>
+        <div class="row">
+            <div class="col-1">
+                <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="70%" height="70%">
+            </div>
+            <div class="col-1">
+                <img src="{% static 'resource/site_icons/heart.svg' %}" alt="heart" " width=" 70%" height="70%">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

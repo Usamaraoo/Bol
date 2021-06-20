@@ -1,0 +1,55 @@
+.cover{
+    /* border: 1px solid red; */
+    background-repeat: no-repeat !important;
+    background-size:cover !important;
+    background-position: center !important;
+    padding-top: 200px;
+  
+    }
+.profile_main{
+    /* border: 1px solid springgreen; */
+    margin-right: 20px;
+    margin-left: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+.profile_row{
+    display: block;
+    width: 100%;
+    /* border: 1px solid green; */
+    overflow: hidden;
+
+}
+.profile_pic{
+    position: absolute;
+
+    /* border: 1px solid red; */
+    float: left;
+    width: 300px;
+}
+.profile_pic img{
+    bottom: 60px;
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    border: 4px solid rgb(21, 32, 43);
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    object-fit: cover; 
+    z-index: 3;
+    /* background-size: cover; */
+
+}
+.edit_button{
+    margin-top: 10px;
+    float: right ;
+    
+    
+}
+.profile{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    object-fit: cover;  
+}

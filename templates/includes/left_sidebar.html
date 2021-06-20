@@ -1,0 +1,79 @@
+{% load static %}
+<style>
+    .sidenav {
+        font-family: 'Courier New', Courier, monospace;
+        height: 100%;
+        width: 25%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+
+        overflow-x: hidden;
+        padding-top: 20px;
+        border-right: 1px solid wheat;
+    }
+
+    .site_icon {
+        margin-right: 150px;
+        margin-bottom: 30px;
+    }
+
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #e4d9d9;
+        display: block;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .left_bar_content {
+        display: inline-block;
+        float: right;
+        margin-right: 90px;
+
+    }
+
+    .left_bar_content :hover {
+        color: rgb(97, 179, 226);
+    }
+
+    .bar_content img {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<div class="sidenav ">
+    <div class="site_icon">
+        <img class=" rounded mx-auto d-block" src="https://img.icons8.com/fluent/48/000000/twitter.png">
+    </div>
+    <div class="left_bar_content">
+        <div class="bar_content">
+            <img src="{% static 'resource/site_icons/icon_home.png' %}" alt="home" width="15%" height="15%">
+            <a href="{% url 'home' %}" style="display: inline-block;">
+                <strong> Home</strong></a>
+        </div>
+        <div class="bar_content">
+            <img src="{% static 'resource/site_icons/icon_user.png' %}" alt="home" width="15%" height="15%">
+            <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
+                <strong> Profile</strong></a>
+        </div>
+
+        <div class="bar_content">
+            <img src="{% static 'resource/site_icons/bell_icon.png' %}" alt="home" width="15%" height="15%">
+            <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
+                <strong> Notify</strong></a>
+        </div>
+        <div class="bar_content">
+            <img src="{% static 'resource/site_icons/msg_icon.png' %}" alt="home" width="15%" height="15%">
+            <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
+                <strong> Messages</strong></a>
+        </div>
+
+    </div>
+</div>
