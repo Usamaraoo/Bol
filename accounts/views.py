@@ -4,6 +4,7 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 # local
 from tweets.models import Tweet
+from .models import UserProfile
 
 
 def login_view(request):
@@ -42,11 +43,10 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def profile_view(request, username):
-    if request.user.username == username:
-        print('my profile')
-        login_user_tweet = Tweet.objects.filter(user=request.user)
-        context = {'user': request.user, 'tweets': login_user_tweet}
-        return render(request, 'accounts/profile.html', context)
+    cur_user = request.user
+    profile_user = UserProfile.objects.get(username=username)
+    print('my profile')
+    profile_user_tweet = Tweet.objects.filter(user=profile_user)
 
-    else:
-        print('other profile')
+    context = {'profile_user': profile_user, 'tweets': profile_user_tweet}
+    return render(request, 'accounts/profile.html', context)

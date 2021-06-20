@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} {{request.user}} {% endblock %}
+{% block title %} {{profile_user}} {% endblock %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -8,24 +8,29 @@
 <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
 {% endblock stylesheets %}
 {% block content %}
-<div class="cover" style="background: url({{user.prof_cover.url}}); ">
+<div class="cover" style="background: url({{profile_user.prof_cover.url}}); ">
 </div>
 <div class="profile_main">
     <div class="profile_row">
 
         <div class="">
             <div class="profile_pic  ">
-                <img src="{{user.prof_pic.url}}" alt="profile">
+                <img src="{{profile_user.prof_pic.url}}" alt="profile">
             </div>
+            {% if user == profile_user %}
             <div class=" edit_button ">
                 <button class="btn btn-primary bg-transparent "><a href="#"> Edit profile</a></button>
             </div>
+            {% else %}
+            <div class="" style=" height: 50px;"></div>
+            {% endif %}
+
         </div>
     </div>
-    <h3>{{user.first_name}} <span>{{user.last_name}}</span> </h3>
-    <h5>@{{user.username}}</h5>
+    <h3>{{profile_user.first_name}} <span>{{profile_user.last_name}}</span> </h3>
+    <h5>@{{profile_user.username}}</h5>
     <h5> <img src="{% static 'resource/site_icons/calendar.png' %}" alt=" calendar" width="4%" height="4%"> joined on
-        {{user.date_joined.date}}
+        {{profile_user.date_joined.date}}
     </h5>
     <h5>23 following 0 follower</h5>
     <hr>
