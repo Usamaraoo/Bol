@@ -29,7 +29,17 @@
                 <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="70%" height="70%">
             </div>
             <div class="col-1">
-                <img src="{% static 'resource/site_icons/heart.svg' %}" alt="heart" " width=" 70%" height="70%">
+                <a href="{% url 'liked' twt.id %}">
+                    <svg style="width: 30px; height: 30px;" class="svg_class" fill='black' onclick="">
+                        <use xlink:href="/static/resource/svg/free.svg#cil-heart"></use>
+                    </svg>
+
+                </a>
+
+            </div>
+            <div class="col-1">
+                <p>{{twt.likes}}</p>
+
             </div>
         </div>
     </div>

@@ -8,3 +8,8 @@
     border-radius: 50%;
     object-fit: cover;  
 }
+.svg_class{
+    width: 20px !important;
+    height: 20px !important;
+    color: rgb(26, 221, 221) !important;
+}
