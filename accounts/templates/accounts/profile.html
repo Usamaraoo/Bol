@@ -17,13 +17,20 @@
             <div class="profile_pic  ">
                 <img src="{{profile_user.prof_pic.url}}" alt="profile">
             </div>
-            {% if user == profile_user %}
             <div class=" edit_button ">
+
+                {% if user == profile_user %}
                 <button class="btn btn-primary bg-transparent "><a href="#"> Edit profile</a></button>
+                {% elif profile_user in user.following.all %}
+                <button class="btn btn-primary bg-transparent "><a
+                        href="{% url 'follow_unfollow' profile_user %}">Following</a></button>
+
+                {% else %}
+
+                <button class="btn btn-primary bg-transparent "><a href="{% url 'follow_unfollow' profile_user %}">
+                        Follow</a></button>
+                {% endif %}
             </div>
-            {% else %}
-            <div class="" style=" height: 50px;"></div>
-            {% endif %}
 
         </div>
     </div>
@@ -32,7 +39,10 @@
     <h5> <img src="{% static 'resource/site_icons/calendar.png' %}" alt=" calendar" width="4%" height="4%"> joined on
         {{profile_user.date_joined.date}}
     </h5>
-    <h5>23 following 0 follower</h5>
+    <h5><a href="{% url 'following_view' profile_user.username %}">
+            <strong>{{profile_user.following.count}}</strong> following
+            <strong>{{profile_user.followers.count}}</strong>
+            follower</a></h5>
     <hr>
 </div>
 {% for twt in tweets %}
