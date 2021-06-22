@@ -45,7 +45,6 @@ def logout_view(request):
 @login_required(login_url='login')
 def profile_view(request, username):
     profile_user = UserProfile.objects.get(username=username)
-    print('my profile')
     profile_user_tweet = Tweet.objects.filter(user=profile_user)
 
     context = {'profile_user': profile_user, 'tweets': profile_user_tweet}

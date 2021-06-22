@@ -47,8 +47,9 @@
     }
 </style>
 
-
 <div class="sidenav ">
+    {% if user.is_authenticated%}
+
     <div class="site_icon">
         <img class=" rounded mx-auto d-block" src="https://img.icons8.com/fluent/48/000000/twitter.png">
     </div>
@@ -76,4 +77,6 @@
         </div>
 
     </div>
+    {% endif %}
+
 </div>

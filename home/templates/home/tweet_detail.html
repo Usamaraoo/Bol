@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{tweet}} {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+<link rel="stylesheet" href="{% static 'home/css/tweet_detail.css' %}">
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="card text-white bg-dark mb-1 " style="max-width: 80rem; height:20rem;">
+
+    <div class="card-body">
+        <a href="{% url 'profile' tweet.user.username %}" style="text-decoration: none; color: white;">
+            <div class="row">
+                <div class="col-1">
+                    <img src="{{tweet.user.prof_pic.url}}" alt="profile" width="40%" height="40%" class="profile">
+                </div>
+                <strong class="card-text col-3">{{tweet.user.username}}</strong>
+            </div>
+        </a>
+
+        <h3 class="card-title">{{tweet.tweet}}</h3>
+        <div class="row">
+
+            <div class="col-1">
+                <a href="{% url 'liked' tweet.id %}">
+                    <svg style="width: 30px; height: 30px;" class="svg_class" fill='black' onclick="">
+                        <use xlink:href="/static/resource/svg/free.svg#cil-heart"></use>
+                    </svg>
+
+                </a>
+
+            </div>
+            <div class="col-1">
+                <p>{{tweet.likes}}</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="detailBox">
+    <div class="titleBox">
+        <label>Comment Box</label>
+        <button type="button" class="close" aria-hidden="true">&times;</button>
+    </div>
+    <div class="actionBox">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Your comments" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default">Add</button>
+            </div>
+        </form>
+        <ul class="commentList">
+            {% for c in comments %}
+
+            <li>
+                <div class="commenterImage">
+                    <a href="{% url 'profile' c.user.username %}" style="text-decoration: none; color: white;">
+
+                        <img src="{{c.user.prof_pic.url}}" />
+
+                </div>
+                <div class="commentText">
+                    <small>{{c.user.username}}</small> </a>
+                    <h5 class="" style="font-weight: bold;">{{c}}.</h5>
+                    <span class="date sub-text">{{c.comment_time}}</span>
+
+                </div>
+            </li>
+            <hr>
+            {% endfor %}
+
+
+        </ul>
+
+    </div>
+</div>
+{% endblock %}

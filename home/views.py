@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 # Local
-from tweets.models import Tweet
-from tweets.models import TweetLike
+from tweets.models import (Tweet, Comment)
 
 
 # Create your views here.
@@ -21,15 +20,18 @@ def home_view(request):
 # Liking and unliking the post
 def tweet_like(request, tweet_id):
     twt = Tweet.objects.get(id=tweet_id)
-    # the tweet will be liked and TweetLike instance will be create
-    # if the tweet is already liked will remove the TweetLike instance and remove like from tweet
-    try:
-        TweetLike.objects.create(user=request.user, liked=True, tweet=twt)
-        twt.likes += 1
-    except:
-        TweetLike.objects.get(user=request.user, tweet=twt).delete()
-        twt.likes -= 1
-        print('Likes Now', twt.likes)
-    twt.save()
+    if request.user in twt.likes.all():
+        print('un like')
+        twt.likes.remove(request.user)
+    else:
+        print('like')
+        twt.likes.add(request.user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def tweet_detail(request, tweet_id):
+    twt = Tweet.objects.get(id=tweet_id)
+    comments = Comment.objects.filter(tweet=twt)
+    context = {'tweet': twt, 'comments': comments, 'likes': twt.likes}
+    return render(request, 'home/tweet_detail.html', context)

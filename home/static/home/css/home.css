@@ -13,3 +13,7 @@
     height: 20px !important;
     color: rgb(26, 221, 221) !important;
 }
+.normal_Link{
+    color: white !important;
+    text-decoration: none;
+}

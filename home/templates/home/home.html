@@ -12,9 +12,10 @@
     <h3 style="margin-left: 10px;">Home</h3>
 </div>
 {% for twt in tweets %}
+
 <div class="card text-white bg-dark mb-1 " style="max-width: 80rem;">
     <div class="card-body">
-        <a href="{% url 'profile' twt.user.username %}">
+        <a href="{% url 'profile' twt.user.username %}" style="text-decoration: none; color: white;">
             <div class="row">
                 <div class="col-1">
                     <img src="{{twt.user.prof_pic.url}}" alt="profile" width="30%" height="100%" class="profile">
@@ -23,14 +24,17 @@
             </div>
         </a>
 
-        <h4 class="card-title">{{twt.tweet}}</h4>
+        <a href="{% url 'tweet_detail' twt.id %}" class="normal_Link" style="text-decoration: none;">
+            <h4 class="card-title">{{twt.tweet}}</h4>
+        </a>
         <div class="row">
             <div class="col-1">
                 <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="70%" height="70%">
             </div>
             <div class="col-1">
                 <a href="{% url 'liked' twt.id %}">
-                    <svg style="width: 30px; height: 30px;" class="svg_class" fill='black' onclick="">
+                    <svg style="width: 30px; height: 30px;" class="svg_class" {% if request.user in twt.likes.all%}
+                        fill='red' {% endif %}>
                         <use xlink:href="/static/resource/svg/free.svg#cil-heart"></use>
                     </svg>
 
@@ -38,7 +42,7 @@
 
             </div>
             <div class="col-1">
-                <p>{{twt.likes}}</p>
+                <p>{{twt.likes.all.count}}</p>
 
             </div>
         </div>
