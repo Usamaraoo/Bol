@@ -10,7 +10,9 @@ from tweets.models import (Tweet, Comment)
 @login_required(login_url='login')
 def home_view(request):
     tweets = Tweet.objects.order_by('-twt_time')
-
+    for i in tweets:
+        if i.user in request.user.following.all():
+            print(i)
     # TweetLike.objects.filter(tweet=tweets).count()
     # get total likes on post
     context = {'tweets': tweets}
