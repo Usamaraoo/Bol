@@ -2,19 +2,84 @@
 {% block title %} {{profile_user}} Following{% endblock %}
 {% load static %}
 {% block stylesheets %}
+<style>
+    .row {
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+
+    .main {
+        font-family: 'Courier New', Courier, monospace;
+        height: 800px;
+
+    }
+
+    .main p {
+        color: rgb(168, 168, 168);
+        margin-left: 55px;
+    }
+
+    .following {
+        margin-left: 0px;
+    }
+
+    .follow_btn_right {
+        float: right;
+        margin-right: 14px;
+
+    }
+
+    .follow_btn_left {
+        float: right;
+    }
+
+    .profile {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>
 {% endblock stylesheets %}
 {% block content %}
-<h3>Following</h3>
-<ul>
-    {% for f in following %}
-    <li>{{f}}</li>
-    {% endfor %}
-</ul>
-<h3>Followers</h3>
-<ul>
+<div class="row main ">
+    <div class="col-6 following" style="border-right: 1px solid white;">
+        <h3>Following</h3>
+        {% for f in following %}
+        <div class="col-12">
+            <img src="{{f.prof_pic.url}}" alt="profile" width="9%" height="100%" class="profile">
+            <span class="">{{f.first_name}} {{f.last_name}}</span>
+            {% if f == request.user %}
+            {% elif f in request.user.following.all%}
+            <a href="{% url 'follow_unfollow' f %}" class="btn btn-primary btn-sm  follow_btn_left">following</a>
+            {% else %}
+            <a href="{% url 'follow_unfollow' f %}" class="btn btn-primary btn-sm  follow_btn_left">follow</a>
 
-    {% for f in followers %}
-    <li>{{f}}</li>
-    {% endfor %}
-    {% endblock %}
-</ul>
+            {% endif %}
+        </div>
+        <p>@{{f.username}}</p>
+        <hr>
+        {% endfor %}
+    </div>
+    <div class="col-6">
+        <h3>Follower</h3>
+        {% for f in followers %}
+        <div class="col-12">
+            <img src="{{f.prof_pic.url}}" alt="profile" width="9%" height="100%" class="profile">
+            <span class="">{{f.first_name}} {{f.last_name}}</span>
+            {% if f == request.user %}
+            {% elif f in request.user.following.all%}
+            <a href="{% url 'follow_unfollow' f %}" class="btn btn-primary btn-sm  follow_btn_left">following</a>
+            {% else %}
+            <a href="{% url 'follow_unfollow' f %}" class="btn btn-primary btn-sm  follow_btn_left">follow</a>
+
+            {% endif %}
+        </div>
+
+        <p>@{{f.username}}</p>
+        <hr>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

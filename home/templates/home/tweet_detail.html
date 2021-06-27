@@ -21,22 +21,22 @@
             </div>
         </a>
 
-        <h3 class="card-title">{{tweet.tweet}}</h3>
-        <div class="row">
-
+        <h3 class="card-title ">{{tweet.tweet}}</h3>
+        <div class="row cmt_like">
+            <div class="col-1">
+                <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="65%"
+                    height="65%">{{tweet.comments}}
+            </div>
             <div class="col-1">
                 <a href="{% url 'liked' tweet.id %}">
-                    <svg style="width: 30px; height: 30px;" class="svg_class" fill='black' onclick="">
+                    <svg style="width: 30px; height: 30px;" class="svg_class" {% if request.user in tweet.likes.all%}
+                        fill='red' {% endif %}>
                         <use xlink:href="/static/resource/svg/free.svg#cil-heart"></use>
                     </svg>
-
                 </a>
-
+                {{tweet.likes.all.count}}
             </div>
-            <div class="col-1">
-                <p>{{tweet.likes}}</p>
 
-            </div>
         </div>
     </div>
 </div>
@@ -44,17 +44,17 @@
 
 
 <div class="detailBox">
-    <div class="titleBox">
-        <label>Comment Box</label>
-        <button type="button" class="close" aria-hidden="true">&times;</button>
-    </div>
+
     <div class="actionBox">
-        <form class="form-inline" role="form">
+
+        <form class="form-inline" role="form" method="POST">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Your comments" />
+                {% csrf_token %}
+
+                <input class="form-control" type="text" name="comment" placeholder="Your comments" />
             </div>
             <div class="form-group">
-                <button class="btn btn-default">Add</button>
+                <button type="submit" class="btn  btn-primary btn-sm">Add</button>
             </div>
         </form>
         <ul class="commentList">

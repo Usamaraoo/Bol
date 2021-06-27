@@ -31,7 +31,10 @@
         </a>
         <div class="row">
             <div class="col-1">
-                <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="70%" height="70%">
+                <a href="{% url 'tweet_detail' twt.id %}" class="normal_Link" style="text-decoration: none;">
+                    <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="65%"
+                        height="65%">{{twt.comments}}
+                </a>
             </div>
             <div class="col-1">
                 <a href="{% url 'liked' twt.id %}">
@@ -41,12 +44,9 @@
                     </svg>
 
                 </a>
-
+                {{twt.likes.all.count}}
             </div>
-            <div class="col-1">
-                <p>{{twt.likes.all.count}}</p>
 
-            </div>
         </div>
     </div>
 </div>

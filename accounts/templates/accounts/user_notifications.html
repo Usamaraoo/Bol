@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} {{profile_user}} Notify{% endblock %}
+{% load static %}
+{% block stylesheets %}
+{% endblock stylesheets %}
+{% block content %}
+<h3>Notifications</h3>
+{% for i in notifications %}
+
+<a href="{% url 'tweet_detail' i.tweet.id %}">{{i}}</a>
+<hr>
+
+{% endfor %}
+{% endblock %}

@@ -66,8 +66,10 @@
         </div>
 
         <div class="bar_content">
+            <strong style=" position: absolute; left: 140px;">{% if total_notifications.0.active == True %}
+                {{total_notifications.count}} {% endif %}</strong>
             <img src="{% static 'resource/site_icons/bell_icon.png' %}" alt="home" width="15%" height="15%">
-            <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
+            <a href="{% url 'notify' %}" style="display: inline-block;">
                 <strong> Notify</strong></a>
         </div>
         <div class="bar_content">

@@ -48,8 +48,9 @@
     }
 
     .searchbar:hover>.search_icon {
-        background: white;
-        color: #e74c3c;
+        background: rgb(255, 255, 255);
+        color: rgb(55, 161, 223);
+        ;
     }
 
     .search_icon {
@@ -60,21 +61,46 @@
         justify-content: center;
         align-items: center;
         border-radius: 50%;
-        color: white;
+        color: rgb(55, 161, 223);
 
+    }
+
+    .searched_rslt {
+        margin-left: 20px;
     }
 </style>
 
 
 <div class="rightnav">
     <div class="searchbar_main">
-
-        <div class="d-flex justify-content-center h-10">
-            <div class="searchbar">
-                <input class="search_input" type="text" name="" placeholder="Search...">
-                <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        <form action="" method="GET">
+            <div class="d-flex justify-content-center h-10">
+                <div class="searchbar">
+                    <input autocomplete="off" class="search_input" type="text" name="username" placeholder="Search...">
+                    <!-- <a href="#" class="search_icon"><i class="fas fa-search"></i></a> -->
+                    <button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+                </div>
             </div>
-        </div>
     </div>
 
+    </form>
+    {% if searched_users %}
+    {% for user in searched_users %}
+    <div class="row searched_rslt mt-4">
+        <div class="col-2 ">
+            <a href="{% url 'profile' user.username %}" style="text-decoration: none; color: white;">
+                <div class="row">
+                    <div class="col-1">
+                        <img src="{{user.prof_pic.url}}" alt="profile" width="30%" height="100%" class="profile">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-1">
+            <a href="" style="text-decoration: none;" class="normal_Link">@{{user.username}}</a>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+    {% endif%}
 </div>

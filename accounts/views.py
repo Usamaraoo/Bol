@@ -1,23 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 # local
 from tweets.models import Tweet
-from .models import UserProfile
+from .models import UserProfile, UserNotification
+from .forms import SignUpForm, LoginForm
 
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-        return redirect('/')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            credentials = form.cleaned_data
+            user = authenticate(username=credentials['username'], password=credentials['password'])
+            print()
+            # username = form.cleaned_data.get('username')
+            # raw_password = form.cleaned_data.get('password')
+            # user = authenticate(username=username, password=raw_password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
     else:
-        form = SignUpForm()
+        form = LoginForm()
     context = {'form': form}
     return render(request, 'accounts/log_in.html', context)
 
@@ -66,9 +71,19 @@ def follow_unfollow(request, username):
     if user in request.user.following.all():
         # removing the current user from profile follower list and current user following list
         request.user.following.remove(user)
-        user.followers.remove(user)
+        user.followers.remove(request.user)
+        print('unfollowed')
     else:
         # adding the current user to profile follower list and current user following list
-        user.followers.add(user)
+        user.followers.add(request.user)
         request.user.following.add(user)
+        print('followed')
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def notifications_view(request):
+    notifications = UserNotification.objects.filter(user=request.user)
+    # notifications.update(active=True)
+    context = {'notifications': notifications}
+    return render(request, 'accounts/user_notifications.html', context)
