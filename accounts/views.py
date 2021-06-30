@@ -1,7 +1,9 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 # local
 from tweets.models import Tweet
 from .models import UserProfile, UserNotification
@@ -44,7 +46,7 @@ def signup_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('home')
+    return HttpResponseRedirect(reverse_lazy('login'))
 
 
 @login_required(login_url='login')
@@ -59,6 +61,7 @@ def profile_view(request, username):
 @login_required(login_url='login')
 def following_view(request, username):
     profile_user = UserProfile.objects.get(username=username)
+    print(profile_user)
     following = profile_user.following.all()
     followers = profile_user.followers.all()
     context = {'following': following, 'followers': followers}
@@ -77,6 +80,8 @@ def follow_unfollow(request, username):
         # adding the current user to profile follower list and current user following list
         user.followers.add(request.user)
         request.user.following.add(user)
+        UserNotification.objects.create(notification_time=datetime.datetime.now(), from_user=request.user,
+                                        user=user, notification=f'{request.user} started following you')
         print('followed')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

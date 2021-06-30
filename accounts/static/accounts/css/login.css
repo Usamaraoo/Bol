@@ -1,11 +1,13 @@
 
 .logincard{
     margin-top: 150px !important;
+    /* border: 2px solid red !important; */
 }
 .form-control{
     background-color: #15202B !important;
     padding: 1rem .75rem;
     color: blue;
+    
 }
 #login{
     border-radius: 30px  ;

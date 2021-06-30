@@ -6,8 +6,11 @@
 {% block content %}
 <h3>Notifications</h3>
 {% for i in notifications %}
-
+{% if i.tweet%}
 <a href="{% url 'tweet_detail' i.tweet.id %}">{{i}}</a>
+{% else %}
+<a href="#">{{i}}</a>
+{% endif %}
 <hr>
 
 {% endfor %}
