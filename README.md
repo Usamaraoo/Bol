@@ -1,5 +1,5 @@
 # Bol
-Twitter like app 
+Twitter like app just using Django
 
 
 se the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
@@ -8,7 +8,7 @@ se the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 pip install -r requirements.txt
 ```
 
-## Contributing
+## Functionality
 Follow other user write post like and comments 
 search user 
 get notifications
