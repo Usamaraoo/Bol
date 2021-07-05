@@ -28,6 +28,7 @@ python manage.py runserver
 ```
 
 ## Functionality
-Follow other user write post like and comments 
+Chat with other users,
+Follow  write post like and comments 
 search user 
 get notifications
