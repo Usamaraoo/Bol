@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} {{profile_user}} chat_lists{% endblock %}
+{% load static %}
+{% block stylesheets %}
+<style>
+
+</style>
+{% endblock stylesheets %}
+{% block content %}
+
+
+
+<ul class="list-group">
+    <strong>
+        <li class="list-group-item active" style="background-color: black;">Chats</li>
+    </strong>
+    {% for msg in message_list %}
+    <li class="list-group-item" style="background-color: #15202B; border: none !important;">
+        <img src="{{msg.notification.prof_pic.url }}" alt="pro" width="50px" height="50px" style="border-radius: 50%;">
+        <strong><a {% if msg.active %} style="color: green; text-decoration: none;" {% else %}
+                style="color: gray; text-decoration: none;" {% endif %} href="{% url 'chat_room' msg.notification %}">
+                {% if msg.active %}
+                new message from {{msg.notification}}
+                {% else %}
+                Chat with {{msg.notification}}
+                {% endif %}
+            </a></strong>
+        <hr>
+
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

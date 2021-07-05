@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %} {{profile_user}} message{% endblock %}
+{% load static %}
+{% block stylesheets %}
+<style>
+    .singe_msg {
+        color: white;
+    }
+
+    .single_msg_my {
+        float: right;
+        margin-left: 200px;
+        border: 1px solid red;
+        width: 400px;
+    }
+</style>
+{% endblock stylesheets %}
+{% block content %}
+
+<div id="chat-log" style=" width: 400px ; height: 400px; border: 1px solid white;  color: white;">
+    <ul id="chat_message">
+        {% for other,my in whole_chat%}
+        <li class="single_msg">{{other.from_user}} : {{other}}</li>
+        <li class="single_msg_my">{{my}} : {{my.from_user}} </li>
+
+        {%endfor%}
+        {% for i in other_user_msgs%}
+        <div class="single_msg">{{i.from_user}} : {{i}}</div>
+        {%endfor%}
+
+    </ul>
+
+</div><br>
+<input id="chat-message-input" type="text" style="color: black;" size="100"><br>
+<input id="chat-message-submit" type="button" value="Send">
+{{ chat_user.username|json_script:"chat_user" }}
+<script>
+
+    const user_to_chat = JSON.parse(document.getElementById('chat_user').textContent);
+    console.log(user_to_chat, 'user to chat')
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + user_to_chat
+        + '/'
+    );
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('#chat-log').value += (data.sender + ' : ' + data.message + '\n');
+
+        // === Adding new message as list item
+        var msg_ul = document.getElementById("chat_message");
+        var li = document.createElement("li");
+        li.classList.add('single_msg');
+        li.appendChild(document.createTextNode(data.sender + ' : ' + data.message));
+        msg_ul.appendChild(li);
+
+        // -- Checking if the new msg is mine
+        if ('{{request.user.username}}' === data.sender) {
+            console.log('condition is true')
+            mymsg = document.getElementsByClassName('single_msg')
+            //   mymsg.lastChild.style.cssFloat = "right";
+            mymsg[mymsg.length - 1].style.cssFloat = "right";
+        }
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message, 'sender': `{{ request.user }}`
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+{% endblock %}

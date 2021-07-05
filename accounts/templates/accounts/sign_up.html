@@ -16,7 +16,7 @@
 
       <h2>Sign up</h2>
 
-      <form method="post">{% csrf_token %}
+      <form method="POST">{% csrf_token %}
         <div class="form-group mb-3">
           {% render_field form.username class="form-control" placeholder="Username" %}
 
@@ -26,6 +26,8 @@
         </div>
         <div class="form-group mb-3">
           {% render_field form.password1 class="form-control" placeholder="***" %}
+          {% render_field form.password2 class="form-control" placeholder="***" %}
+
         </div>
 
 

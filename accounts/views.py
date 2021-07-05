@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.hashers import make_password
 # local
 from tweets.models import Tweet
 from .models import UserProfile, UserNotification
@@ -29,16 +30,35 @@ def login_view(request):
     return render(request, 'accounts/log_in.html', context)
 
 
+# def signup_view(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             raw_password = form.cleaned_data.get('password')
+#             user = authenticate(username=username, password=raw_password)
+#             login(request, user)
+#             return redirect('/')
+#     else:
+#         form = SignUpForm()
+#     return render(request, 'accounts/sign_up.html', {'form': form})
+
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            print('valid')
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
+            raw_password = form.cleaned_data.get('password1')
+            print('username',username,'password',raw_password)
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+
             return redirect('/')
+        else:
+            print(form.errors)
     else:
         form = SignUpForm()
     return render(request, 'accounts/sign_up.html', {'form': form})
@@ -46,7 +66,7 @@ def signup_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse_lazy('login'))
+    return redirect('/')
 
 
 @login_required(login_url='login')

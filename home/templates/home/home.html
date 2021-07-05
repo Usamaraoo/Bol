@@ -52,4 +52,11 @@
 </div>
 {% endif %}
 {% endfor %}
+
+{% if user.following.all %}
+{% else %}
+<strong>
+    <h1>Not following anyone yet</h1>
+</strong>
+{% endif %}
 {% endblock %}

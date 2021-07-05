@@ -17,7 +17,6 @@ def home_view(request):
             searched_users = UserProfile.objects.filter(username__icontains=get_name)
     tweets = Tweet.objects.order_by('-twt_time')
     total_notifications = UserNotification.objects.filter(user=request.user)
-    print('notify',total_notifications)
     context = {'tweets': tweets, 'total_notifications': total_notifications, 'searched_users': searched_users}
     return render(request, 'home/home.html', context)
 

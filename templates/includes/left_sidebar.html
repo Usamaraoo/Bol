@@ -74,11 +74,11 @@
         </div>
         <div class="bar_content">
             <img src="{% static 'resource/site_icons/msg_icon.png' %}" alt="home" width="15%" height="15%">
-            <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
+            <a href="{% url 'chat_list' request.user.username %}" style="display: inline-block;">
                 <strong> Messages</strong></a>
         </div>
         <div class="bar_content">
-            <img src="{% static 'resource/site_icons/.png' %}" alt="home" width="15%" height="15%">
+            <img src="{% static 'resource/site_icons/logout.png' %}" alt="home" width="15%" height="15%">
             <a href="{% url 'logout' %}" style="display: inline-block;">
                 <strong> logout</strong></a>
         </div>

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,12 +40,13 @@ INSTALLED_APPS = [
     'accounts',
     'home',
     'tweets',
+    'chat',
     # 3rd party
     'widget_tweaks',
 ]
 # config/settings.py
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/login'  # new
+LOGOUT_REDIRECT_URL = '/'  # new
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,6 +58,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Bol.urls'
+# Channels
+ASGI_APPLICATION = 'Bol.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # supposing you put it in apps/profiles/models.py
 AUTH_USER_MODEL = "accounts.UserProfile"
 TEMPLATES = [
