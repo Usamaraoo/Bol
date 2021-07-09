@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} Bol {% endblock %}
+{% load widget_tweaks %}
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
-
 {% endblock stylesheets %}
 
 {% block content %}
@@ -11,6 +11,12 @@
 <div style="width: 100%;">
     <h3 style="margin-left: 10px;">Home</h3>
 </div>
+<form id="tweet_form" action="" method="POST">
+    {% csrf_token %}
+    {% render_field form.tweet class="" placeholder="What is On your Mind...." autocomplete="off" %}
+    <button class=" btn btn-primary bg-transparent" id="tweet_btn" type="submit">Tweet </button>
+</form>
+
 {% for twt in tweets %}
 
 {% if twt.user in user.following.all %}
@@ -22,14 +28,14 @@
                 <div class="col-1">
                     <img src="{{twt.user.prof_pic.url}}" alt="profile" width="30%" height="100%" class="profile">
                 </div>
-                <strong class="card-text col-3">{{twt.user.username}}</strong>
+                <strong class="card-text col-3 ">{{twt.user.username}}</strong>
             </div>
         </a>
 
         <a href="{% url 'tweet_detail' twt.id %}" class="normal_Link" style="text-decoration: none;">
-            <h4 class="card-title">{{twt.tweet}}</h4>
+            <h4 class="card-title " style="margin-left: 30px;">{{twt.tweet}}</h4>
         </a>
-        <div class="row">
+        <div class="row " style="margin-left: 15px;">
             <div class="col-1">
                 <a href="{% url 'tweet_detail' twt.id %}" class="normal_Link" style="text-decoration: none;">
                     <img src="{% static 'resource/site_icons/comment.svg' %}" alt="comment" width="65%"
@@ -59,4 +65,13 @@
     <h1>Not following anyone yet</h1>
 </strong>
 {% endif %}
+
+<script>
+    cur_user = '{{request.user}}';
+    profile_pic_url = '{{request.user.prof_pic.url}}'
+
+</script>
+
+<script src="{% static 'home/js/home.js' %}"></script>
+
 {% endblock %}
