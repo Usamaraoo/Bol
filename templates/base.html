@@ -21,10 +21,10 @@
 </head>
 
 <body>
-
+    {% if user.is_authenticated %}
     {% include 'includes/left_sidebar.html' %}
-    {% include 'includes/right_sidebar.html' %}
 
+    {% endif %}
     <div class="home ">
         {% block content %}
         {% endblock %}

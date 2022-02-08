@@ -38,6 +38,7 @@ form.addEventListener('submit', e => {
 
 function create_tweet(tweet_content, tweet_id) {
     var parent_div = document.createElement('div');
+
     var card_body = document.createElement('div')
     var profile_link = document.createElement('a')
     var row = document.createElement('div')
@@ -55,9 +56,15 @@ function create_tweet(tweet_content, tweet_id) {
 
     var like = document.createElement('div')
     var like_link = document.createElement('a')
+    var cmnt_count = document.createElement('span')
+    var like_count = document.createElement('span')
+    var cmnt_text = document.createTextNode("0")
+    var like_text = document.createTextNode("0")
+    cmnt_count.appendChild(cmnt_text)
+    like_count.appendChild(like_text)
     var like_img = document.createElement('img')
 
-
+    like_count
 
     parent_div.id = 'container';
     parent_div.className = 'card text-white bg-dark mb-1';
@@ -113,10 +120,16 @@ function create_tweet(tweet_content, tweet_id) {
 
     like_link.appendChild(like_img)
     like.appendChild(like_link)
+    like.appendChild(like_count)
+
     cmnt_link.appendChild(cmt_img)
     cmnt.appendChild(cmnt_link)
+    cmnt.appendChild(cmnt_count)
+
     like_comnt_row.appendChild(cmnt)
+
     like_comnt_row.appendChild(like)
+
     card_body.appendChild(profile_link)
 
     tweet_link.appendChild(twt_text)
@@ -125,5 +138,5 @@ function create_tweet(tweet_content, tweet_id) {
     card_body.appendChild(like_comnt_row)
 
     parent_div.appendChild(card_body)
-    document.body.childNodes[11].insertBefore(parent_div, document.body.childNodes[11].childNodes[5])
+    document.body.childNodes[5].insertBefore(parent_div, document.body.childNodes[5].childNodes[11])
 }

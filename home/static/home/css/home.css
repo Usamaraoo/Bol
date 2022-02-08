@@ -12,6 +12,7 @@
     font-weight: 800;
     z-index: -1;
     font-size: 20px;
+    padding-left: 20px;
 
 }
 #tweet_btn{
@@ -35,4 +36,12 @@
 .normal_Link{
     color: white !important;
     text-decoration: none;
+}
+.dp{
+    padding-left: 20px;
+}
+
+#container{
+    padding-left: 20px;
+    background-color: aqua;
 }
