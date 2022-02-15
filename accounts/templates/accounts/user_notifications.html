@@ -4,14 +4,25 @@
 {% block stylesheets %}
 {% endblock stylesheets %}
 {% block content %}
-<h3>Notifications</h3>
-{% for i in notifications %}
-{% if i.tweet%}
-<a href="{% url 'tweet_detail' i.tweet.id %}">{{i}}</a>
-{% else %}
-<a href="#">{{i}}</a>
-{% endif %}
+<h2 style="padding-left:10px"> <b> Notifications</b></h2>
 <hr>
+<div style="padding-left: 10px; padding-right:10px">
+    {% for i in notifications %}
+    {% if i.tweet%}
+    <a href="{% url 'tweet_detail' i.tweet.id %}">
+        <h4> <b> {{i}}</b></h4>
+    </a>
+    <p>{{i.notification_time}}</p>
+    {% else %}
 
-{% endfor %}
+    <a href="{% url 'profile' i.from_user %}">
+        <h4> <b>{{i}}</b></h4>
+    </a>
+    <p>{{i.notification_time}}</p>
+
+    {% endif %}
+    <hr>
+
+    {% endfor %}
+</div>
 {% endblock %}

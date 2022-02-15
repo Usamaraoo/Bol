@@ -8,10 +8,8 @@
         z-index: 1;
         top: 0;
         left: 0;
-
         overflow-x: hidden;
         padding-top: 20px;
-        border-right: 1px solid wheat;
     }
 
     .site_icon {
@@ -59,15 +57,18 @@
             <a href="{% url 'home' %}" style="display: inline-block;">
                 <strong> Home</strong></a>
         </div>
-        <div class="bar_content">
+        <div class="bar_content" >
             <img src="{% static 'resource/site_icons/icon_user.png' %}" alt="home" width="15%" height="15%">
             <a href="{% url 'profile' request.user.username %}" style="display: inline-block;">
                 <strong> Profile</strong></a>
         </div>
 
-        <div class="bar_content">
-            <strong style=" position: absolute; left: 140px;">{% if total_notifications.0.active == True %}
-                {{total_notifications.count}} {% endif %}</strong>
+        <div class="bar_content" style=" position:relative;">
+            <strong style=" position: absolute; left: 140px;">
+                {% if request.session.notification_count != 0  %}
+                {{ request.session.notification_count }}
+                {% endif %}
+            </strong>
             <img src="{% static 'resource/site_icons/bell_icon.png' %}" alt="home" width="15%" height="15%">
             <a href="{% url 'notify' %}" style="display: inline-block;">
                 <strong> Notify</strong></a>

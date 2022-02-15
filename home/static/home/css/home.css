@@ -17,8 +17,10 @@
 }
 #tweet_btn{
     position: absolute; 
-    top: 220px;
-    right: 400px;
+    /* top: 220px; */
+    /* right: 400px; */
+    bottom: 5px;
+    right: 10px;
     width: 150px  !important;
     z-index: 2;
 }

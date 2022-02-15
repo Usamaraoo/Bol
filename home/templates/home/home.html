@@ -10,9 +10,9 @@
 {% include 'includes/right_sidebar.html' %}
 
 <div style="width: 100%;">
-    <h3 style="margin-left: 10px;">Home</h3>
+    <h2 style="margin-left: 10px;"> <b> Home</b></h2>
 </div>
-<form id="tweet_form" action="" method="POST">
+<form id="tweet_form" action="" method="POST"  style="position:relative; border-radius:20px; margin:10px;">
     {% csrf_token %}
     {% render_field form.tweet class="" placeholder="What is On your Mind...." autocomplete="off" %}
     <button class=" btn btn-primary bg-transparent" id="tweet_btn" type="submit">Tweet </button>
@@ -22,7 +22,7 @@
 
 {% if twt.user in user.following.all %}
 
-<div class="card text-white bg-dark mb-1 " style="max-width: 80rem;">
+<div class="card text-white bg-dark mb-1 " style="margin: 10px; border-radius:20px; ">
     <div class="card-body">
         <a href="{% url 'profile' twt.user.username %}" style="text-decoration: none; color: white;">
             <div class="row dp">

@@ -16,7 +16,8 @@ def login_view(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             credentials = form.cleaned_data
-            user = authenticate(username=credentials['username'], password=credentials['password'])
+            user = authenticate(
+                username=credentials['username'], password=credentials['password'])
             print()
             # username = form.cleaned_data.get('username')
             # raw_password = form.cleaned_data.get('password')
@@ -52,7 +53,7 @@ def signup_view(request):
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            print('username',username,'password',raw_password)
+            print('username', username, 'password', raw_password)
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
@@ -73,6 +74,7 @@ def logout_view(request):
 def profile_view(request, username):
     profile_user = UserProfile.objects.get(username=username)
     profile_user_tweet = Tweet.objects.filter(user=profile_user)
+    print(request.session['notification_count'], 'these are cookie')
 
     context = {'profile_user': profile_user, 'tweets': profile_user_tweet}
     return render(request, 'accounts/profile.html', context)
@@ -108,7 +110,8 @@ def follow_unfollow(request, username):
 
 
 def notifications_view(request):
-    notifications = UserNotification.objects.filter(user=request.user)
+    notifications = UserNotification.objects.filter(
+        user=request.user).order_by('-notification_time')
     # notifications.update(active=True)
     context = {'notifications': notifications}
     return render(request, 'accounts/user_notifications.html', context)
